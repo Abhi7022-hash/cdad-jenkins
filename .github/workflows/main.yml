@@ -3,23 +3,20 @@ name: Build and Deploy Static Website
 on:
   push:
     branches:
-      - main  # Trigger workflow on push to main branch
+      - main  # Deploy whenever main branch is updated
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up Node.js (optional if you plan to use build tools)
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
-
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./ 
+        publish_dir: ./      # Root folder containing index.html
+        publish_branch: gh-pages  # Branch where site will be deployed
+
